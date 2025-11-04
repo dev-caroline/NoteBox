@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <!-- Toastify CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+</head>
+
+<body style="height: 100vh; width: 100%;">
+    <div class="p-3 d-flex justify-content-between align-items-center" style="background-color: lightblue;">
+        <div class="fs-5"
+            style="font-family: 'Courier New', Courier, monospace; color: rgb(39, 66, 66); font-weight: bolder;">NoteBox
+        </div>
+        <div id="userProfile" class="d-none align-items-center gap-2">
+            <img id="profileImage" src="" alt="Profile"
+                style="width: 40px; height: 40px; border-radius: 50%; border: 2px solid white;">
+            <span id="userEmail" class="text-white fw-bold"></span>
+        </div>
+        <button class="btn btn-light fw-bold" id="authBtn" onclick="signIn()">
+            <span id="authBtnText">Sign in</span>
+        </button>
+    </div>
+
+    <div class="col-8 mx-auto shadow mt-5 p-3" style="height: 85vh;">
+        <div class="d-flex align-items-center gap-2 mb-3">
+            <a href="/public/index.html" class="text-decoration-none" style="cursor: pointer;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
+                    class="bi bi-arrow-bar-left" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                        d="M12.5 15a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 1 0v13a.5.5 0 0 1-.5.5M10 8a.5.5 0 0 1-.5.5H3.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L3.707 7.5H9.5a.5.5 0 0 1 .5.5" />
+                </svg>
+            </a>
+            <p id="noteName" class="mb-0 fw-bold fs-5"></p>
+        </div>
+        <textarea name="" id="noteTextarea" class="form-control mt-2" style="height: 70vh;"></textarea>
+        <div class="d-flex justify-content-end">
+            <button class="btn btn-primary mt-4 fw-bold" onclick="save()">Save</button>
+        </div>
+    </div>
+
+    <!-- Toastify JS -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script type="module" src="script.js"></script>
+</body>
+
+</html>
