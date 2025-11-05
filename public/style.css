@@ -5,6 +5,17 @@
         max-width: none !important;
         height: 120px !important;
     }
+    
+    #display > .folder-card .form-control {
+        font-size: 11px !important;
+        height: 40px !important;
+        padding: 4px 8px !important;
+        line-height: 1.2 !important;
+    }
+    
+    #display > .folder-card {
+        padding: 8px !important;
+    }
 }
 
 @media (min-width: 577px) and (max-width: 768px) {
@@ -59,6 +70,15 @@
 @media (max-width: 576px) {
     .btn {
         font-size: 14px;
+    }
+    
+    #display > .folder-card svg {
+        width: 16px !important;
+        height: 16px !important;
+    }
+    
+    #display > .folder-card .position-absolute.top-0.end-0 {
+        padding: 4px !important;
     }
 }
 

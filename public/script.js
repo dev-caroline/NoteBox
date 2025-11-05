@@ -206,7 +206,7 @@ const loadFoldersFromDatabase = async () => {
                             Delete
                         </button>
                     </div>
-                    <a href="/public/note.html?folder=${encodeURIComponent(folder.name)}" class="bg-white px-2 text-center form-control d-flex align-items-center justify-content-center" style="word-break: break-word; height: 50px; overflow: hidden; border-radius: 8px; font-weight: 600; font-size: 13px; text-decoration: none; color: #333;">
+                    <a href="note.html?folder=${encodeURIComponent(folder.name)}" class="bg-white px-2 text-center form-control d-flex align-items-center justify-content-center" style="word-break: break-word; height: 50px; overflow: hidden; border-radius: 8px; font-weight: 600; font-size: 13px; text-decoration: none; color: #333;">
                         ${folder.name}
                     </a>
                 </div>
