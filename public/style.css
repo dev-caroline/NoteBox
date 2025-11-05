@@ -6,7 +6,7 @@
         height: 120px !important;
     }
     
-    #display > .folder-card .form-control {
+    #display > .folder-card .folder-name-link {
         font-size: 11px !important;
         height: 40px !important;
         padding: 4px 8px !important;
@@ -22,6 +22,11 @@
     #display > .folder-card {
         width: calc(33.33% - 12px) !important;
         max-width: 180px !important;
+    }
+    
+    #display > .folder-card .folder-name-link {
+        font-size: 12px !important;
+        height: 45px !important;
     }
 }
 
@@ -60,6 +65,11 @@
 
 .folder-card {
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.folder-name-link {
+    height: 50px;
+    font-size: 13px;
 }
 
 .folder-card:hover {
