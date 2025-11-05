@@ -4,13 +4,13 @@ import { getFirestore, collection, addDoc, getDocs, query, where, updateDoc, doc
 import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 
 const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_AUTH_DOMAIN",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_STORAGE_BUCKET",
-    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-    appId: "YOUR_APP_ID",
-    measurementId: "YOUR_MEASUREMENT_ID"
+    apiKey: "AIzaSyAj-tkFJ9xkhlJ9fDwbKolB-bYZ0FE7gKc",
+    authDomain: "note-box-95a03.firebaseapp.com",
+    projectId: "note-box-95a03",
+    storageBucket: "note-box-95a03.firebasestorage.app",
+    messagingSenderId: "1094345195061",
+    appId: "1:1094345195061:web:d333f2ebd2f52a488b3b7c",
+    measurementId: "G-C4VMXP2PT5"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -26,7 +26,7 @@ const showToast = (message, type = 'info') => {
         warning: 'linear-gradient(to right, #f093fb, #f5576c)',
         info: 'linear-gradient(to right, #4facfe, #00f2fe)'
     };
-    
+
     Toastify({
         text: message,
         duration: 1500,
@@ -145,11 +145,29 @@ const signIn = () => {
 }
 window.signIn = signIn;
 
+
+
+
+
+
+
+
+
+
+
 let folderName = document.getElementById('folderName')
 let noteName = document.getElementById('noteName')
 let display = document.getElementById('display')
 
 const folders = []
+
+
+
+
+
+
+
+
 
 const loadFoldersFromDatabase = async () => {
     if (!currentUser || !display) return;
@@ -159,7 +177,7 @@ const loadFoldersFromDatabase = async () => {
 
         folders.length = 0;
         display.innerHTML = '';
-        
+
         const folderDataList = [];
         snapshot.forEach((doc) => {
             const folderData = doc.data();
@@ -182,6 +200,16 @@ const loadFoldersFromDatabase = async () => {
         console.error('Error loading folders:', error);
     }
 };
+
+
+
+
+
+
+
+
+
+
 
 const createFolder = () => {
     if (!currentUser) {
@@ -226,6 +254,18 @@ const createFolder = () => {
         });
 }
 window.createFolder = createFolder
+
+
+
+
+
+
+
+
+
+
+
+
 
 if (noteName) {
     const urlParams = new URLSearchParams(window.location.search);
