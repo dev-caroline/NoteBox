@@ -8,42 +8,43 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 
-<body style="height: 100vh; width: 100%; background: #f8f9fa;">
-    <div class="p-3 d-flex justify-content-between align-items-center" style="background: #0f766e; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-        <div class="fs-5 text-light d-flex align-items-center gap-2"
+<body style="min-height: 100vh; width: 100%; background: #f8f9fa;">
+    <div class="p-2 p-md-3 d-flex justify-content-between align-items-center flex-wrap gap-2" style="background: #0f766e; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+        <div class="fs-6 fs-md-5 text-light d-flex align-items-center gap-2"
             style="font-family: 'Segoe UI', sans-serif; font-weight: bold;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" viewBox="0 0 16 16">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16" class="d-none d-sm-block">
                 <path d="M5 0h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2 2 2 0 0 1-2 2H3a2 2 0 0 1-2-2h1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1H1a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v9a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1H3a2 2 0 0 1 2-2"/>
                 <path d="M1 6v-.5a.5.5 0 0 1 1 0V6h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0V9h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 2.5v.5H.5a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1H2v-.5a.5.5 0 0 0-1 0"/>
             </svg>
-            NoteBox
+            <span class="mb-0">NoteBox</span>
         </div>
-        <div id="userProfile" class="d-none align-items-center gap-2">
+        <div id="userProfile" class="d-none align-items-center gap-2 order-3 order-md-2">
             <img id="profileImage" src="" alt="Profile"
-                style="width: 40px; height: 40px; border-radius: 50%; border: 2px solid white;">
-            <span id="userEmail" class="text-white fw-bold px-3 py-2 rounded-pill" 
-                style="background-color: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.3);"></span>
+                style="width: 32px; height: 32px; border-radius: 50%; border: 2px solid white;">
+            <span id="userEmail" class="text-white fw-bold px-2 px-md-3 py-1 py-md-2 rounded-pill d-none d-sm-inline" 
+                style="background-color: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.3); font-size: 14px;"></span>
         </div>
-        <button class="btn btn-light fw-bold" id="authBtn" onclick="signIn()">
+        <button class="btn btn-light fw-bold btn-sm order-2 order-md-3" id="authBtn" onclick="signIn()">
             <span id="authBtnText">Sign in</span>
         </button>
     </div>
 
-    <div class="col-8 mx-auto shadow-sm mt-5 p-4 bg-white" style="height: 85vh; border-radius: 12px;">
+    <div class="col-11 col-sm-10 col-md-9 col-lg-8 mx-auto shadow-sm mt-3 mt-md-5 p-3 p-md-4 bg-white" style="min-height: 85vh; border-radius: 12px;">
         <div class="d-flex align-items-center gap-2 mb-3">
             <a href="/public/index.html" class="text-decoration-none" style="cursor: pointer; color: #0f766e; transition: color 0.3s;">
-                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor"
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
                     class="bi bi-arrow-left-circle-fill" viewBox="0 0 16 16">
                     <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0m3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z"/>
                 </svg>
             </a>
-            <p id="noteName" class="mb-0 fw-bold fs-4" style="color: #333;"></p>
+            <p id="noteName" class="mb-0 fw-bold fs-5 fs-md-4" style="color: #333; word-break: break-word;"></p>
         </div>
-        <textarea name="" id="noteTextarea" class="form-control mt-2" placeholder="Start writing your notes..." style="height: 70vh; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 15px;"></textarea>
+        <textarea name="" id="noteTextarea" class="form-control mt-2" placeholder="Start writing your notes..." style="height: calc(85vh - 120px); min-height: 300px; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 14px; resize: vertical;"></textarea>
         <div class="d-flex justify-content-end">
-            <button class="btn mt-4 fw-bold px-4" onclick="save()" style="background: #0f766e; color: white; border: none; border-radius: 8px;">Save Note</button>
+            <button class="btn mt-3 mt-md-4 fw-bold px-3 px-md-4 py-2" onclick="save()" style="background: #0f766e; color: white; border: none; border-radius: 8px; font-size: 14px;">Save Note</button>
         </div>
     </div>
 

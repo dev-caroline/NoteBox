@@ -178,19 +178,22 @@ const loadFoldersFromDatabase = async () => {
         display.innerHTML = '';
         if (folderDataList.length === 0) {
             display.innerHTML = `
-                <div class="w-100 text-center" style="padding: 100px 20px;">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="#0f766e" viewBox="0 0 16 16" style="opacity: 0.3;">
+                <div class="w-100 text-center px-3" style="padding: 60px 20px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="#0f766e" viewBox="0 0 16 16" style="opacity: 0.3;" class="d-none d-md-block mx-auto">
                         <path d="M.54 3.87.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3h3.982a2 2 0 0 1 1.992 2.181l-.637 7A2 2 0 0 1 13.174 14H2.826a2 2 0 0 1-1.991-1.819l-.637-7a2 2 0 0 1 .342-1.31zM2.19 4a1 1 0 0 0-.996 1.09l.637 7a1 1 0 0 0 .995.91h10.348a1 1 0 0 0 .995-.91l.637-7A1 1 0 0 0 13.81 4zm4.69-1.707A1 1 0 0 0 6.172 2H2.5a1 1 0 0 0-1 .981l.006.139q.323-.119.684-.12h5.396z"/>
                     </svg>
-                    <h3 class="mt-4 mb-3" style="color: #333; font-weight: 600;">No folders yet</h3>
-                    <p class="text-muted" style="font-size: 16px;">Create your first folder to start organizing your notes!</p>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="#0f766e" viewBox="0 0 16 16" style="opacity: 0.3;" class="d-md-none mx-auto">
+                        <path d="M.54 3.87.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3h3.982a2 2 0 0 1 1.992 2.181l-.637 7A2 2 0 0 1 13.174 14H2.826a2 2 0 0 1-1.991-1.819l-.637-7a2 2 0 0 1 .342-1.31zM2.19 4a1 1 0 0 0-.996 1.09l.637 7a1 1 0 0 0 .995.91h10.348a1 1 0 0 0 .995-.91l.637-7A1 1 0 0 0 13.81 4zm4.69-1.707A1 1 0 0 0 6.172 2H2.5a1 1 0 0 0-1 .981l.006.139q.323-.119.684-.12h5.396z"/>
+                    </svg>
+                    <h3 class="mt-3 mt-md-4 mb-2 mb-md-3 fs-5 fs-md-4" style="color: #333; font-weight: 600;">No folders yet</h3>
+                    <p class="text-muted" style="font-size: 14px;">Create your first folder to start organizing your notes!</p>
                 </div>
             `;
         } else {            
             const foldersHTML = folderDataList.map(folder => `     
-                <div class="p-5 position-relative" style="width: 15%; height: 17vh; overflow: visible; background: #b1b8b7ff; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: transform 0.3s ease;">
+                <div class="p-3 p-md-4 position-relative folder-card" style="min-width: 120px; height: 140px; overflow: visible; background: #b1b8b7ff; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: transform 0.3s ease;">
                     <div class="position-absolute top-0 end-0 p-2" style="cursor: pointer;">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" viewBox="0 0 16 16" onclick="toggleDeleteMenu('${folder.id}', event)">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="white" viewBox="0 0 16 16" onclick="toggleDeleteMenu('${folder.id}', event)">
                             <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
                         </svg>
                     </div>
@@ -203,7 +206,7 @@ const loadFoldersFromDatabase = async () => {
                             Delete
                         </button>
                     </div>
-                    <a href="/public/note.html?folder=${encodeURIComponent(folder.name)}" class="bg-white px-3 text-center form-control" style="word-break: break-all; max-height: 4vh; overflow-y: auto; border-radius: 8px; font-weight: 600;">
+                    <a href="/public/note.html?folder=${encodeURIComponent(folder.name)}" class="bg-white px-2 text-center form-control d-flex align-items-center justify-content-center" style="word-break: break-word; height: 50px; overflow: hidden; border-radius: 8px; font-weight: 600; font-size: 13px; text-decoration: none; color: #333;">
                         ${folder.name}
                     </a>
                 </div>
