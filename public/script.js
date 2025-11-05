@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-analytics.js";
-import { getFirestore, collection, addDoc, getDocs, query, where, updateDoc, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs, query, where, updateDoc, doc, setDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 
 const firebaseConfig = {
@@ -48,10 +48,16 @@ onAuthStateChanged(auth, (user) => {
     const userEmail = document.getElementById('userEmail');
     const authBtn = document.getElementById('authBtn');
     const authBtnText = document.getElementById('authBtnText');
+    const welcomeMessage = document.getElementById('welcomeMessage');
 
     if (user) {
         console.log('User signed in:', user.email);
         loadFoldersFromDatabase();
+
+        // Hide welcome message when signed in
+        if (welcomeMessage) {
+            welcomeMessage.style.display = 'none';
+        }
 
         if (profileImage) {
             profileImage.src = user.photoURL || 'https://via.placeholder.com/40?text=User';
@@ -71,6 +77,8 @@ onAuthStateChanged(auth, (user) => {
                 signOut(auth).then(() => {
                     console.log('Signed out successfully');
                     showToast('Signed out successfully', 'success');
+                    // Refresh page after sign out
+                    window.location.reload();
                 }).catch((err) => {
                     console.error('Sign out error:', err);
                     showToast('Sign out failed: ' + err.message, 'error');
@@ -79,6 +87,11 @@ onAuthStateChanged(auth, (user) => {
         }
     } else {
         console.log('User signed out');
+
+        // Show welcome message when not signed in
+        if (welcomeMessage) {
+            welcomeMessage.style.display = 'block';
+        }
 
         if (profileSection) {
             profileSection.classList.remove('d-flex');
@@ -171,29 +184,63 @@ const folders = []
 
 const loadFoldersFromDatabase = async () => {
     if (!currentUser || !display) return;
+    
+    // Show loading indicator
+    display.innerHTML = '<div class="w-100 text-center p-5"><div class="spinner-border text-secondary" role="status"><span class="visually-hidden">Loading...</span></div></div>';
+    
     try {
         const foldersRef = collection(db, `users/${currentUser.uid}/folders`);
         const snapshot = await getDocs(foldersRef);
 
         folders.length = 0;
-        display.innerHTML = '';
-
         const folderDataList = [];
+        
         snapshot.forEach((doc) => {
             const folderData = doc.data();
             folderDataList.push({ id: doc.id, name: folderData.name });
             folders.push(folderData.name);
         });
 
-        folderDataList.forEach((folder) => {
-            display.innerHTML += `     
-            <div class="p-5 bg-info" style="width: 15%; height: 17vh; overflow: hidden;">
-                <a href="/public/note.html?folder=${encodeURIComponent(folder.name)}" class="bg-white px-3 text-center form-control" style="word-break: break-all; max-height: 4vh; overflow-y: auto;">
-                    ${folder.name}
-                </a>
-            </div>
+        // Clear display after data is ready
+        display.innerHTML = '';
+
+        // If no folders, show empty state for signed-in users
+        if (folderDataList.length === 0) {
+            display.innerHTML = `
+                <div class="w-100 text-center" style="padding: 100px 20px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="#0f766e" viewBox="0 0 16 16" style="opacity: 0.3;">
+                        <path d="M.54 3.87.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3h3.982a2 2 0 0 1 1.992 2.181l-.637 7A2 2 0 0 1 13.174 14H2.826a2 2 0 0 1-1.991-1.819l-.637-7a2 2 0 0 1 .342-1.31zM2.19 4a1 1 0 0 0-.996 1.09l.637 7a1 1 0 0 0 .995.91h10.348a1 1 0 0 0 .995-.91l.637-7A1 1 0 0 0 13.81 4zm4.69-1.707A1 1 0 0 0 6.172 2H2.5a1 1 0 0 0-1 .981l.006.139q.323-.119.684-.12h5.396z"/>
+                    </svg>
+                    <h3 class="mt-4 mb-3" style="color: #333; font-weight: 600;">No folders yet</h3>
+                    <p class="text-muted" style="font-size: 16px;">Create your first folder to start organizing your notes!</p>
+                </div>
             `;
-        });
+        } else {
+            // Build all HTML at once instead of appending
+            const foldersHTML = folderDataList.map(folder => `     
+                <div class="p-5 position-relative" style="width: 15%; height: 17vh; overflow: visible; background: #b1b8b7ff; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: transform 0.3s ease;">
+                    <div class="position-absolute top-0 end-0 p-2" style="cursor: pointer;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" viewBox="0 0 16 16" onclick="toggleDeleteMenu('${folder.id}', event)">
+                            <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
+                        </svg>
+                    </div>
+                    <div id="deleteMenu-${folder.id}" class="position-absolute bg-white shadow rounded p-2" style="display: none; top: 40px; right: 10px; z-index: 1000; min-width: 100px;">
+                        <button class="btn btn-sm btn-danger w-100" onclick="deleteFolder('${folder.id}', '${folder.name.replace(/'/g, "\\'")}')">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+                                <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+                            </svg>
+                            Delete
+                        </button>
+                    </div>
+                    <a href="/public/note.html?folder=${encodeURIComponent(folder.name)}" class="bg-white px-3 text-center form-control" style="word-break: break-all; max-height: 4vh; overflow-y: auto; border-radius: 8px; font-weight: 600;">
+                        ${folder.name}
+                    </a>
+                </div>
+            `).join('');
+            
+            display.innerHTML = foldersHTML;
+        }
 
         console.log(`Loaded ${folders.length} folders from database`);
     } catch (error) {
@@ -254,6 +301,70 @@ const createFolder = () => {
         });
 }
 window.createFolder = createFolder
+
+// Toggle delete menu
+const toggleDeleteMenu = (folderId, event) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    // Close all other menus
+    document.querySelectorAll('[id^="deleteMenu-"]').forEach(menu => {
+        if (menu.id !== `deleteMenu-${folderId}`) {
+            menu.style.display = 'none';
+        }
+    });
+
+    // Toggle current menu
+    const menu = document.getElementById(`deleteMenu-${folderId}`);
+    if (menu) {
+        menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
+    }
+};
+window.toggleDeleteMenu = toggleDeleteMenu;
+
+// Delete folder function
+const deleteFolder = async (folderId, folderName) => {
+    if (!currentUser) {
+        showToast('Please sign in first', 'warning');
+        return;
+    }
+
+    // Confirm deletion
+    if (!confirm(`Are you sure you want to delete "${folderName}"? This action cannot be undone.`)) {
+        return;
+    }
+
+    try {
+        // Delete folder from Firestore
+        await deleteDoc(doc(db, `users/${currentUser.uid}/folders`, folderId));
+
+        // Also delete associated note if it exists
+        try {
+            await deleteDoc(doc(db, `users/${currentUser.uid}/notes`, folderName));
+        } catch (e) {
+            console.log('No associated note to delete');
+        }
+
+        console.log('✅ Folder deleted successfully');
+        showToast(`Folder "${folderName}" deleted! 🗑️`, 'success');
+
+        // Reload folders
+        loadFoldersFromDatabase();
+    } catch (error) {
+        console.error('❌ ERROR deleting folder:', error);
+        showToast('Failed to delete folder: ' + error.message, 'error');
+    }
+};
+window.deleteFolder = deleteFolder;
+
+// Close menus when clicking outside
+document.addEventListener('click', (event) => {
+    if (!event.target.closest('[id^="deleteMenu-"]') && !event.target.closest('svg')) {
+        document.querySelectorAll('[id^="deleteMenu-"]').forEach(menu => {
+            menu.style.display = 'none';
+        });
+    }
+});
 
 
 

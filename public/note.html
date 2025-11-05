@@ -11,35 +11,40 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 </head>
 
-<body style="height: 100vh; width: 100%;">
-    <div class="p-3 d-flex justify-content-between align-items-center" style="background-color: lightblue;">
-        <div class="fs-5"
-            style="font-family: 'Courier New', Courier, monospace; color: rgb(39, 66, 66); font-weight: bolder;">NoteBox
+<body style="height: 100vh; width: 100%; background: #f8f9fa;">
+    <div class="p-3 d-flex justify-content-between align-items-center" style="background: #0f766e; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+        <div class="fs-5 text-light d-flex align-items-center gap-2"
+            style="font-family: 'Segoe UI', sans-serif; font-weight: bold;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M5 0h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2 2 2 0 0 1-2 2H3a2 2 0 0 1-2-2h1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1H1a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v9a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1H3a2 2 0 0 1 2-2"/>
+                <path d="M1 6v-.5a.5.5 0 0 1 1 0V6h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0V9h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 2.5v.5H.5a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1H2v-.5a.5.5 0 0 0-1 0"/>
+            </svg>
+            NoteBox
         </div>
         <div id="userProfile" class="d-none align-items-center gap-2">
             <img id="profileImage" src="" alt="Profile"
                 style="width: 40px; height: 40px; border-radius: 50%; border: 2px solid white;">
-            <span id="userEmail" class="text-white fw-bold"></span>
+            <span id="userEmail" class="text-white fw-bold px-3 py-2 rounded-pill" 
+                style="background-color: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.3);"></span>
         </div>
         <button class="btn btn-light fw-bold" id="authBtn" onclick="signIn()">
             <span id="authBtnText">Sign in</span>
         </button>
     </div>
 
-    <div class="col-8 mx-auto shadow mt-5 p-3" style="height: 85vh;">
+    <div class="col-8 mx-auto shadow-sm mt-5 p-4 bg-white" style="height: 85vh; border-radius: 12px;">
         <div class="d-flex align-items-center gap-2 mb-3">
-            <a href="/public/index.html" class="text-decoration-none" style="cursor: pointer;">
-                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
-                    class="bi bi-arrow-bar-left" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd"
-                        d="M12.5 15a.5.5 0 0 1-.5-.5v-13a.5.5 0 0 1 1 0v13a.5.5 0 0 1-.5.5M10 8a.5.5 0 0 1-.5.5H3.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L3.707 7.5H9.5a.5.5 0 0 1 .5.5" />
+            <a href="/public/index.html" class="text-decoration-none" style="cursor: pointer; color: #0f766e; transition: color 0.3s;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor"
+                    class="bi bi-arrow-left-circle-fill" viewBox="0 0 16 16">
+                    <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0m3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z"/>
                 </svg>
             </a>
-            <p id="noteName" class="mb-0 fw-bold fs-5"></p>
+            <p id="noteName" class="mb-0 fw-bold fs-4" style="color: #333;"></p>
         </div>
-        <textarea name="" id="noteTextarea" class="form-control mt-2" style="height: 70vh;"></textarea>
+        <textarea name="" id="noteTextarea" class="form-control mt-2" placeholder="Start writing your notes..." style="height: 70vh; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 15px;"></textarea>
         <div class="d-flex justify-content-end">
-            <button class="btn btn-primary mt-4 fw-bold" onclick="save()">Save</button>
+            <button class="btn mt-4 fw-bold px-4" onclick="save()" style="background: #0f766e; color: white; border: none; border-radius: 8px;">Save Note</button>
         </div>
     </div>
 

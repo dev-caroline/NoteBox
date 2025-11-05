@@ -10,13 +10,24 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 </head>
 
-<body style="height: 100vh; width: 100%;">
-    <div class="p-3 d-flex justify-content-between align-items-center" style="background-color: lightblue;">
-        <div class="fs-5" style="font-family: 'Courier New', Courier, monospace; color: rgb(39, 66, 66); font-weight: bolder;">NoteBox</div>
+<body style="height: 100vh; width: 100%; background: #f8f9fa;">
+    <div class="p-3 d-flex justify-content-between align-items-center" style="background: #0f766e; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+        <div class="fs-5 d-flex gap-2 text-light"
+            style="font-family: 'Segoe UI', sans-serif; font-weight: bold;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-journals"
+                viewBox="0 0 16 16">
+                <path
+                    d="M5 0h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2 2 2 0 0 1-2 2H3a2 2 0 0 1-2-2h1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1H1a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v9a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1H3a2 2 0 0 1 2-2" />
+                <path
+                    d="M1 6v-.5a.5.5 0 0 1 1 0V6h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0V9h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 2.5v.5H.5a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1H2v-.5a.5.5 0 0 0-1 0" />
+            </svg>
+            <p>NoteBox</p>
+        </div>
         <div id="userProfile" class="d-none align-items-center gap-2">
             <img id="profileImage" src="" alt="Profile"
                 style="width: 40px; height: 40px; border-radius: 50%; border: 2px solid white;">
-            <span id="userEmail" class="text-white fw-bold"></span>
+            <span id="userEmail" class="text-white fw-bold px-3 py-2 rounded-pill" 
+                style="background-color: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.3);"></span>
         </div>
         <button class="btn btn-light fw-bold" id="authBtn" onclick="signIn()">
             <span id="authBtnText">Sign in</span>
@@ -25,7 +36,7 @@
     <div class="col-7 mx-auto mt-5 d-flex gap-3">
         <input type="text" class="form-control border border-3 border-secondary text-secondary" id="folderName"
             placeholder="Create Folder">
-        <button class="btn btn-info" onclick="createFolder()">
+        <button class="btn fw-bold px-3" onclick="createFolder()" style="background: #0f766e; color: white; border: none;">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg"
                 viewBox="0 0 16 16">
                 <path fill-rule="evenodd"
@@ -35,10 +46,28 @@
     </div>
     <div class="m-5 p-5 d-flex gap-5 mx-auto col-10 justify-content-center"
         style="height: 75vh; flex-wrap: wrap; overflow-y: auto;" id="display">
+        <!-- Welcome message for new users -->
+        <div id="welcomeMessage" class="w-100 text-center" style="padding: 100px 20px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="#0f766e" viewBox="0 0 16 16" style="opacity: 0.5;">
+                <path d="M5 0h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2 2 2 0 0 1-2 2H3a2 2 0 0 1-2-2h1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1H1a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v9a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1H3a2 2 0 0 1 2-2"/>
+            </svg>
+            <h2 class="mt-4 mb-3" style="color: #333; font-weight: 600;">Welcome to NoteBox!</h2>
+            <p class="text-muted mb-4" style="font-size: 18px;">Your personal note-taking space</p>
+            <p class="text-secondary" style="max-width: 500px; margin: 0 auto;">
+                Sign in with your Google account to start organizing your notes into folders. 
+                Create, edit, and access your notes from anywhere.
+            </p>
+            <div class="mt-4">
+                <button class="btn fw-bold px-5 py-2" onclick="signIn()" style="background: #0f766e; color: white; border: none; border-radius: 8px; font-size: 16px;">
+                    Get Started →
+                </button>
+            </div>
+        </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" 
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script type="module" src="script.js"></script>
 </body>
