@@ -4,12 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>NoteBox</title>
+    <link rel="shortcut icon" href="journals.svg" class="text-light" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 </head>
-
 <body style="height: 100vh; width: 100%; background: #f8f9fa;">
     <div class="p-3 d-flex justify-content-between align-items-center" style="background: #0f766e; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
         <div class="fs-5 d-flex gap-2 text-light"
@@ -23,7 +23,7 @@
             </svg>
             <p>NoteBox</p>
         </div>
-        <div id="userProfile" class="d-none align-items-center gap-2">
+        <div id="userProfile" class="d-flex align-items-center gap-2">
             <img id="profileImage" src="" alt="Profile"
                 style="width: 40px; height: 40px; border-radius: 50%; border: 2px solid white;">
             <span id="userEmail" class="text-white fw-bold px-3 py-2 rounded-pill" 
@@ -55,7 +55,7 @@
             <p class="text-muted mb-4" style="font-size: 18px;">Your personal note-taking space</p>
             <p class="text-secondary" style="max-width: 500px; margin: 0 auto;">
                 Sign in with your Google account to start organizing your notes into folders. 
-                Create, edit, and access your notes from anywhere.
+                Create, delete, and access your notes from anywhere.
             </p>
             <div class="mt-4">
                 <button class="btn fw-bold px-5 py-2" onclick="signIn()" style="background: #0f766e; color: white; border: none; border-radius: 8px; font-size: 16px;">
