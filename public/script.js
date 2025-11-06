@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs, query, where, updateDoc, doc, setDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs, query, where, doc, setDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 
 const firebaseConfig = {
@@ -172,9 +172,19 @@ const loadFoldersFromDatabase = async () => {
         
         snapshot.forEach((doc) => {
             const folderData = doc.data();
-            folderDataList.push({ id: doc.id, name: folderData.name });
+            folderDataList.push({ 
+                id: doc.id, 
+                name: folderData.name,
+                createdAt: folderData.createdAt 
+            });
             folders.push(folderData.name);
         });
+        folderDataList.sort((a, b) => {
+            const dateA = a.createdAt?.toDate?.() || a.createdAt || new Date(0);
+            const dateB = b.createdAt?.toDate?.() || b.createdAt || new Date(0);
+            return dateB - dateA;
+        });
+        
         display.innerHTML = '';
         if (folderDataList.length === 0) {
             display.innerHTML = `
